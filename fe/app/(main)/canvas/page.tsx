@@ -38,7 +38,7 @@ export default function Page() {
   const [isAdvancedOpen, setIsAdvancedOpen] = useState(false)
   const {data: session} = useSession()
 
-  console.log(session,'getting session data...............')
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
@@ -65,7 +65,7 @@ export default function Page() {
         formData.append("image", currentImg)
       }
       setIsLoading(true)
-      const res = await fetch("http://localhost:8080/generate-image",{
+      const res = await fetch(`${apiUrl}/generate-image`,{
         headers: {
           "Authorization": `Bearer ${session?.user?.token}`
         },
@@ -120,7 +120,7 @@ export default function Page() {
   const handleFollowUp = async () => {
     try {
       setIsLoading(true)
-      const res = await fetch("http://localhost:8080/follow-up", {
+      const res = await fetch(`${apiUrl}/follow-up`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -132,7 +132,6 @@ export default function Page() {
         }),
       })
       const data = await res.json()
-      console.log(data,'getting data from follow up........')
       if (!data.success) {
         alert("Follow-up request failed!")
       }
