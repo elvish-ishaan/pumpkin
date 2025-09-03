@@ -46,6 +46,9 @@ export default function Page() {
       alert("Please upload an image file.")
       return
     }
+    //remove any generated images
+    setCurrentGenImg(null)
+    setIsInitPrompt(true)
     setCurrentImg(file)
     // Close left sidebar on mobile after upload
     if (window.innerWidth < 768) {
