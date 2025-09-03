@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Slider } from "@/components/ui/slider"
 import { Textarea } from "@/components/ui/textarea"
+import UserProfile from "@/components/UserProfile"
 import {
   Upload,
   History,
@@ -17,8 +18,9 @@ import {
   X,
   ChevronUp,
   ChevronDown,
+  ArrowLeft,
 } from "lucide-react"
-import { useSession } from "next-auth/react"
+import { signOut, useSession } from "next-auth/react"
 import Image from "next/image"
 import { useState } from "react"
 
@@ -81,7 +83,6 @@ export default function Page() {
       if (window.innerWidth < 768) {
         setIsRightSidebarOpen(false)
       }
-      console.log(data, "getting data from res.............")
     } catch (error) {
       console.log(error, "getting err while generating")
     }finally{
@@ -155,7 +156,6 @@ export default function Page() {
     try {
       const pathname = new URL(currentGenImg as string).pathname; 
       const filename = pathname.split("/").pop();
-      console.log(filename,'filename.............')
       const res = await fetch(`http://localhost:8080/download?imageUrl=${filename}`);
       const data = await res.json()
      if(!data.success){
@@ -187,67 +187,82 @@ export default function Page() {
           className="text-white hover:bg-slate-700/50"
         >
           <Menu className="w-5 h-5" />
-        </Button>
-        
-        <h1 className="text-lg font-semibold text-white">Image Editor</h1>
-        
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={() => setIsRightSidebarOpen(!isRightSidebarOpen)}
-          className="text-white hover:bg-slate-700/50"
-        >
-          <Sparkles className="w-5 h-5" />
-        </Button>
+        </Button>        
       </header>
 
       {/* Left Sidebar */}
-      <aside className={`
-        fixed md:relative top-0 left-0 z-50 w-64 h-full bg-slate-800/95 md:bg-slate-800/50 
-        transform transition-transform duration-300 ease-in-out
-        ${isLeftSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
-        md:w-64 md:flex md:flex-col
-        ${isLeftSidebarOpen ? 'md:mt-0' : 'md:mt-0'}
-      `}>
-        {/* Mobile close button */}
-        <div className="md:hidden flex justify-end p-4">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => setIsLeftSidebarOpen(false)}
-            className="text-white hover:bg-slate-700/50"
-          >
-            <X className="w-5 h-5" />
-          </Button>
-        </div>
+      <aside
+  className={`
+    fixed md:relative top-0 left-0 z-50 w-64 h-full bg-slate-900/95 md:bg-slate-900/60 
+    transform transition-transform duration-300 ease-in-out
+    ${isLeftSidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
+    md:w-64 md:flex md:flex-col
+  `}
+>
+  {/* Mobile close button */}
+  <div className="md:hidden flex justify-end p-4">
+    <Button
+      variant="ghost"
+      size="sm"
+      onClick={() => setIsLeftSidebarOpen(false)}
+      className="text-white hover:bg-slate-700/50"
+    >
+      <X className="w-5 h-5" />
+    </Button>
+  </div>
 
-        <div className="p-4 md:p-6 flex flex-col gap-4">
-          <span className="px-4 font-semibold text-lg tracking-widest md:px-6">PUMPKIN</span>
-          <div className="relative">
-            <input 
-              type="file" 
-              onChange={handleImageUpload} 
-              className="hidden" 
-              id="file-upload"
-              accept="image/*"
-            />
-            <label htmlFor="file-upload" className="block cursor-pointer">
-              <div className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg px-4 py-3 flex items-center justify-center gap-2 transition-colors">
-                <Upload className="w-4 h-4" />
-                Upload
-              </div>
-            </label>
-          </div>
-          
-          <div className="space-y-2">
-            <ToolButton icon={<History className="w-5 h-5" />} label="History" />
-            <ToolButton icon={<Shuffle className="w-5 h-5" />} label="Resize" />
-            <ToolButton icon={<Sparkles className="w-5 h-5" />} label="Filters" />
-            <ToolButton icon={<Layers className="w-5 h-5" />} label="Effects" />
-            <ToolButton icon={<Square className="w-5 h-5" />} label="Overlays" />
-          </div>
+  {/* Sidebar content */}
+  <div className="flex flex-col justify-between h-[100vh] p-4 md:p-6">
+    {/* Logo */}
+    <span className="px-2 font-semibold text-lg tracking-widest text-white mb-4">
+      PUMPKIN
+    </span>
+
+    {/* Upload button */}
+    <div className="mb-6">
+      <input
+        type="file"
+        onChange={handleImageUpload}
+        className="hidden"
+        id="file-upload"
+        accept="image/*"
+      />
+      <label htmlFor="file-upload" className="block cursor-pointer">
+        <div className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md px-4 py-3 flex items-center justify-center gap-2 transition-colors">
+          <Upload className="w-4 h-4" />
+          Upload
         </div>
+      </label>
+    </div>
+
+    {/* Tools in the middle */}
+    <div className="space-y-2">
+      <ToolButton icon={<History className="w-5 h-5" />} label="History" />
+      <ToolButton icon={<Shuffle className="w-5 h-5" />} label="Resize" />
+      <ToolButton icon={<Sparkles className="w-5 h-5" />} label="Filters" />
+      <ToolButton icon={<Layers className="w-5 h-5" />} label="Effects" />
+      <ToolButton icon={<Square className="w-5 h-5" />} label="Overlays" />
+    </div>
+
+    {/* Logout button pinned at bottom */}
+    <div className="mt-auto pt-4 border-t border-slate-700/50">
+    <UserProfile/>
+      <Button
+        onClick={() => signOut({
+          redirect: true,
+          callbackUrl: "/"
+        }) }
+        variant="outline"
+        className="w-full flex items-center justify-center gap-2 rounded-md  bg-rose-500 text-white border-slate-600 hover:bg-rose-600"
+      >
+        <ArrowLeft className="w-4 h-4" />
+        Logout
+      </Button>
+    </div>
+  </div>
       </aside>
+
+
 
       {/* Overlay for mobile */}
       {(isLeftSidebarOpen || isRightSidebarOpen) && (
@@ -270,8 +285,8 @@ export default function Page() {
               <Image
                 width={800}
                 height={600}
-                src={displayImage.src}
-                alt={displayImage.alt}
+                src={displayImage?.src}
+                alt={displayImage?.alt}
                 className="object-contain w-full h-full rounded-2xl"
                 style={{ maxWidth: "100%", maxHeight: "100%" }}
               />
@@ -441,13 +456,14 @@ export default function Page() {
 
       {/* Right Sidebar - Desktop Only */}
       <aside className={`
-        fixed md:relative top-0 right-0 z-50 w-80 h-full bg-slate-800/95 md:bg-slate-800/50 
+        fixed md:relative top-0 right-0 z-50 w-80 h-[100vh] bg-slate-800/95 md:bg-slate-800/50 
         transform transition-transform duration-300 ease-in-out
         ${isRightSidebarOpen ? 'translate-x-0' : 'translate-x-full md:translate-x-0'}
         hidden md:flex md:flex-col
         ${isRightSidebarOpen ? 'md:mt-0' : 'md:mt-0'}
       `}>
-        <div className="p-6 space-y-6 flex-1 overflow-auto">
+        < >
+         <div className="p-6 space-y-6 flex-1 overflow-auto">
           {/* Prompt Input */}
           <div className="space-y-3">
             <label className="text-lg font-semibold text-white">Prompt</label>
@@ -557,6 +573,7 @@ export default function Page() {
             </Button>
           )}
         </div>
+        </>
       </aside>
     </div>
   )

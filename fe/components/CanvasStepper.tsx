@@ -5,17 +5,17 @@ import { Upload, Type, Sparkles, ArrowRight } from "lucide-react"
 export default function CanvasStepper() {
   const steps = [
     {
-      icon: <Upload className="w-5 h-5 text-primary" />,
+      icon: <Upload className="w-5 h-5 text-white" />,
       title: "Upload Image",
       description: "Choose an image you want to edit or enhance.",
     },
     {
-      icon: <Type className="w-5 h-5 text-primary" />,
+      icon: <Type className="w-5 h-5 text-white" />,
       title: "Add a Prompt",
       description: "Describe your edits in plain English. Be creative!",
     },
     {
-      icon: <Sparkles className="w-5 h-5 text-primary" />,
+      icon: <Sparkles className="w-5 h-5 text-white" />,
       title: "AI Magic ✨",
       description: "Sit back and relax while AI transforms your image.",
     },

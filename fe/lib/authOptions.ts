@@ -16,7 +16,6 @@ export const authOptions: AuthOptions = {
   },
   callbacks: {
     async jwt({ token, account, profile }) {
-        console.log(token,'getting jwt token details.............')
       if (account && profile) {
         //generate the jwt token and add it token
         const payload = {
@@ -31,12 +30,10 @@ export const authOptions: AuthOptions = {
       return token
     },
     async session({ session, token }) {
-        console.log(session,token,'gettng sessoin and token...........')
       if (token) {
         session.user.email = token.email as string
         session.user.token = token.accessToken as unknown as string
       }
-      console.log(session,'reutrning session.............')
       return session
     },
   },
