@@ -5,10 +5,13 @@ import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const router = useRouter();
+  const {data: session} = useSession();
+  console.log(session);
 
   return (
     // Using fixed ensures it stays at the top across layouts where sticky may fail due to overflow.

@@ -77,7 +77,8 @@ export default function Page() {
       })
       const data = await res.json()
       if(!data.success){
-        alert("Image generation failed!")
+        alert(data?.message || "Generation failed!")
+        return
       }
       setCurrentGenImg(data?.genRes)
       setIsInitPrompt(false)
@@ -136,7 +137,8 @@ export default function Page() {
       })
       const data = await res.json()
       if (!data.success) {
-        alert("Follow-up request failed!")
+        alert(data?.message || "Follow-up request failed!")
+        return
       }
       setCurrentGenImg(data?.genRes)
       setPrompt("")

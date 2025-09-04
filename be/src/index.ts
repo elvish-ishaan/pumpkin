@@ -1,4 +1,4 @@
-import express, { request, response, type Request, type Response } from 'express';
+import express, { type Request, type Response } from 'express';
 import cors from 'cors'
 import dotenv from 'dotenv'
 dotenv.config()
@@ -7,6 +7,8 @@ import multer from 'multer'
 import { downloadObject, uploadFile } from './configs/storage.js';
 import { ai } from './configs/genClient.js';
 import { verifyAuth } from './middleware/auth.js';
+import prisma from './configs/prismaClient.js';
+import { checkUsage } from './middleware/analytics.js';
 
 const app = express()
 
@@ -17,7 +19,8 @@ app.use(express.urlencoded({ extended: true }));
 const storage = multer.memoryStorage()
 const upload = multer({ storage: storage })
 
-app.post('/generate-image', verifyAuth,  upload.single('image'), async (req: Request, res: Response) => {
+
+app.post('/generate-image', verifyAuth, checkUsage, upload.single('image'), async (req: Request, res: Response) => {
   // Extract prompt from formdata
   const { prompt } = req.body
   const imageData = req.file?.buffer;
@@ -91,6 +94,22 @@ app.post('/generate-image', verifyAuth,  upload.single('image'), async (req: Req
           filename, 
           inlineDataPart.inlineData?.mimeType || "application/octet-stream"
         );
+
+        //Update user usage
+        try {
+          const userId = req.user?.userId;
+        if (userId) {
+          await prisma.user.update({
+            where: { id: userId },
+            data: {
+              imagesUploaded: { increment: 1 },
+              noOfPrompts: { increment: 1 }
+            }
+          });
+        }
+        } catch (error) {
+          console.log(error, 'error in updating user usage....')
+        }
         
         return res.status(200).json({
           success: true,
@@ -134,7 +153,7 @@ app.post('/generate-image', verifyAuth,  upload.single('image'), async (req: Req
 
 
 
-app.post('/follow-up', verifyAuth, async(req: Request, res: Response) => {
+app.post('/follow-up', verifyAuth, checkUsage, async(req: Request, res: Response) => {
   try {
     //extract the image url from body
     const {imageUrl, prompt} = req.body;
@@ -212,7 +231,22 @@ app.post('/follow-up', verifyAuth, async(req: Request, res: Response) => {
           filename, 
           inlineDataPart.inlineData?.mimeType || "application/octet-stream"
         );
-        
+
+        // Update user usage
+        try {
+          const userId = req.user?.userId;
+        if (userId) {
+          await prisma.user.update({
+            where: { id: userId },
+            data: {
+              noOfPrompts: { increment: 1 }
+            }
+          });
+        }
+        } catch (error) {
+          console.log(error, 'error in updating user usage....')
+        }
+
         return res.status(200).json({
           success: true,
           message: 'Image generated successfully',

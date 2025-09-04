@@ -19,6 +19,7 @@ export const authOptions: AuthOptions = {
       if (account && profile) {
         //generate the jwt token and add it token
         const payload = {
+            userId : token.sub,
             userEmail : token.email
         }
         const SignedToken = jwt.sign(payload, process.env.NEXTAUTH_SECRET!, {
@@ -31,6 +32,7 @@ export const authOptions: AuthOptions = {
     },
     async session({ session, token }) {
       if (token) {
+        session.user.id = token.sub as string
         session.user.email = token.email as string
         session.user.token = token.accessToken as unknown as string
       }
