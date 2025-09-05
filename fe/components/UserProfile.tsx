@@ -4,12 +4,6 @@ import { useSession } from "next-auth/react"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import UsageTracker from "./UsageBox"
 
-function parseLimit(value?: string): number | "UNLIMITED" {
-  if (!value) return 0
-  if (value.toUpperCase() === "UNLIMITED") return "UNLIMITED"
-  return Number(value)
-}
-
 
 export default function UserProfile() {
   const { data: session } = useSession()
@@ -22,7 +16,6 @@ export default function UserProfile() {
     )
   }
 
-  console.log(parseLimit(process.env.NEXT_PUBLIC_STANDARD_ALLOWED_IMAGE_PROMPTS!),'getting parced env.................')
   return (
     <>
     <UsageTracker

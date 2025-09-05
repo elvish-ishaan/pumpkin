@@ -70,7 +70,7 @@ export default function UsageTracker({
     <div className="w-full p-4 mb-2 bg-slate-800/70 border border-slate-700 rounded-xl space-y-4 text-sm text-slate-200">
       {/* Plan Header */}
       <div className="flex justify-between items-center">
-        <span className="font-semibold capitalize">Plan: {normalizedPlan}</span>
+        <span className="font-semibold capitalize"> {normalizedPlan}</span>
         {isFree && (
           <span className="text-xs text-slate-400">Free Tier</span>
         )}

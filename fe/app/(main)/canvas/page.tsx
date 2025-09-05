@@ -4,7 +4,6 @@ import CanvasStepper from "@/components/CanvasStepper"
 import Loader from "@/components/loaders/Loader"
 import PricingModal from "@/components/PricingModal"
 import FilterPopover from "@/components/toolTips/Filter"
-import FilterTooltip from "@/components/toolTips/Filter"
 import PresetPopover from "@/components/toolTips/Preset"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -36,8 +35,7 @@ export default function Page() {
   const [isLeftSidebarOpen, setIsLeftSidebarOpen] = useState(false)
   const [isRightSidebarOpen, setIsRightSidebarOpen] = useState(false)
   const [isAdvancedOpen, setIsAdvancedOpen] = useState(false)
-  const {data: session} = useSession()
-  console.log(session,'session in canvas page')
+  const {data: session, update} = useSession()
   const [pricingModalOpen, setPricingModalOpen] = useState<boolean>(false)
 
   const apiUrl = process.env.NEXT_PUBLIC_API_URL
@@ -89,6 +87,8 @@ export default function Page() {
         alert(data?.message || "Generation failed!")
         return
       }
+      //update the user session
+      await update()
       setCurrentGenImg(data?.genRes)
       setIsInitPrompt(false)
       setPrompt("")
@@ -149,6 +149,8 @@ export default function Page() {
         alert(data?.message || "Follow-up request failed!")
         return
       }
+      //update the session
+      await update()
       setCurrentGenImg(data?.genRes)
       setPrompt("")
       // Close right sidebar on mobile after follow-up
@@ -169,7 +171,12 @@ export default function Page() {
     try {
       const pathname = new URL(currentGenImg as string).pathname; 
       const filename = pathname.split("/").pop();
-      const res = await fetch(`http://localhost:8080/download?imageUrl=${filename}`);
+      const res = await fetch(`http://localhost:8080/download?imageUrl=${filename}`,{
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${session?.user?.token}`
+        }
+      });
       const data = await res.json()
      if(!data.success){
       alert("Download failed!")
@@ -547,7 +554,7 @@ export default function Page() {
           </div>
 
           {/* Advanced Settings */}
-          <div className="space-y-4">
+          {/* <div className="space-y-4">
             <h4 className="text-lg font-semibold text-white">
               Advanced Settings
             </h4>
@@ -605,7 +612,7 @@ export default function Page() {
                 className="bg-slate-700/50 border-slate-600 text-white placeholder-slate-400 rounded-lg"
               />
             </div>
-          </div>
+          </div> */}
         </div>
 
         {/* Bottom Action Buttons - Desktop */}
@@ -622,16 +629,5 @@ export default function Page() {
         </>
       </aside>
     </div>
-  )
-}
-
-function ToolButton({ icon, label }: { icon: React.ReactNode; label: string }) {
-  return (
-    <Button
-      variant="ghost"
-      className="justify-start gap-3 rounded-lg hover:bg-slate-700/50 text-slate-300 hover:text-white p-3 md:p-4 font-medium w-full text-sm md:text-base"
-    >
-      {icon} {label}
-    </Button>
   )
 }
