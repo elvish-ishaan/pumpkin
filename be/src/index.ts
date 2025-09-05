@@ -9,6 +9,9 @@ import { ai } from './configs/genClient.js';
 import { verifyAuth } from './middleware/auth.js';
 import prisma from './configs/prismaClient.js';
 import { checkUsage } from './middleware/analytics.js';
+import { razorpay } from './configs/payment.js';
+import crypto from 'crypto';
+import { filters } from './lib/filterPrompts.js';
 
 const app = express()
 
@@ -19,14 +22,47 @@ app.use(express.urlencoded({ extended: true }));
 const storage = multer.memoryStorage()
 const upload = multer({ storage: storage })
 
+app.get('/user', verifyAuth, async(req: Request, res: Response) => {
+  try {
+    const userId = req.user?.userId;
+    if(!userId){
+      return res.status(400).json({
+        success: false,
+        message: 'User not found'
+      });
+    }
+
+    const user = await prisma.user.findUnique({
+      where: { id: userId }
+    });
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found'
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      user
+    });
+  } catch (error) {
+    console.error('Error fetching user:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Internal server error'
+    });
+  }
+});
 
 app.post('/generate-image', verifyAuth, checkUsage, upload.single('image'), async (req: Request, res: Response) => {
   // Extract prompt from formdata
-  const { prompt } = req.body
+  const { prompt, filter: usrFilter } = req.body
   const imageData = req.file?.buffer;
   const base64Image = imageData?.toString("base64");
 
-  if (!prompt) {
+  if (!usrFilter && !prompt) {
     return res.status(400).json({
       success: false,
       message: 'prompt is required'
@@ -34,9 +70,22 @@ app.post('/generate-image', verifyAuth, checkUsage, upload.single('image'), asyn
   }
 
   try {
-    
+    let finalPrompt;
+    //if user has chosen a filter, append it to the prompt
+    if(req.body.filter){
+      for (const filterObj of filters){
+        if(filterObj.label === req.body.filter){
+          finalPrompt = filterObj.prompt
+          break;
+        }
+      }
+    }else{
+      finalPrompt = prompt
+    }
     // Prepare content array - only include inline data if image is present
-    const contents: any[] = [{ text: prompt }];
+    const contents: any[] = [{ 
+      text: finalPrompt
+    }];
     
     if (base64Image && req.file) {
       contents.push({
@@ -150,7 +199,6 @@ app.post('/generate-image', verifyAuth, checkUsage, upload.single('image'), asyn
     })
   }
 })
-
 
 
 app.post('/follow-up', verifyAuth, checkUsage, async(req: Request, res: Response) => {
@@ -287,6 +335,93 @@ app.post('/follow-up', verifyAuth, checkUsage, async(req: Request, res: Response
     })
   }
 })
+
+//add middleware ehre
+app.post("/create-subscription", async (req: Request, res: Response) => {
+  try {
+    const { planId } = req.body;
+
+    if (!planId) {
+      return res.status(400).json({
+        success: false,
+        message: 'Plan ID is required'
+      });
+    }
+
+    // Create subscription in Razorpay
+    const subscription = await razorpay.subscriptions.create({
+      plan_id: planId,
+      total_count: 12, // e.g., for a yearly subscription with monthly billing
+    });
+    console.log(subscription,'subscription created....')
+
+    return res.status(200).json({
+      success: true,
+      message: 'Subscription created successfully',
+      subscription
+    });
+  } catch (error) {
+    console.log(error,'error in create subscription route')
+    return res.status(500).json({
+      success: false,
+      message: 'Internal server error'
+    })
+  }
+});
+
+app.post("/varify-subscription", async (req: Request, res: Response) => {
+  try {
+    const { razorpayPaymentId, razorpaySubscriptionId, razorpaySignature, userId } = req.body;
+
+    if (!razorpayPaymentId || !razorpaySubscriptionId || !razorpaySignature) { 
+      return res.status(400).json({
+        success: false,
+        message: 'All payment details are required'
+      });
+    } 
+
+    const verifySignature = (paymentId: string, subscriptionId: string, signature: string) => {
+      const generatedSignature = crypto.createHmac('sha256', process.env.RAZORPAY_KEY_SECRET as string)
+        .update(paymentId + '|' + subscriptionId)
+        .digest('hex');
+      return generatedSignature === signature;
+    }
+
+    // Verify payment signature
+    const isValid = verifySignature(razorpayPaymentId, razorpaySubscriptionId, razorpaySignature);
+    if (!isValid) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid payment signature'
+      });
+    }
+
+    //update the user subscription in db
+    // Update user usage
+    const updatedUser = await prisma.user.update({
+      where: {
+        id: userId
+      },
+      data: {
+        planType: 'STANDARD'
+      }
+    })
+    console.log(updatedUser,'updated user after subscription....')
+
+    return res.status(200).json({
+      success: true,
+      message: 'Subscription verified successfully',
+      isOk: true
+    });
+  } catch (error) {
+    console.log(error,'error in verify subscription route')
+    return res.status(500).json({
+      success: false,
+      message: 'Internal server error',
+      isOk: false
+    })
+  }
+});
 
 //download image
 app.get('/download', verifyAuth, async(req: Request, res: Response) => {

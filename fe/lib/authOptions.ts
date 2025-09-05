@@ -36,6 +36,19 @@ export const authOptions: AuthOptions = {
         session.user.email = token.email as string
         session.user.token = token.accessToken as unknown as string
       }
+      //fetch user details and add to session
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token.accessToken}`
+        }
+      });
+      const userData = await res.json();
+      if (userData.success) {
+        session.user.planType = userData.user.planType;
+        session.user.imagesUploaded = userData.user.imagesUploaded;
+        session.user.noOfPrompts = userData.user.noOfPrompts;
+      }
       return session
     },
   },
