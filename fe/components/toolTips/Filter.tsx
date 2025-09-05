@@ -31,6 +31,7 @@ interface FilterProps {
     image: File | null
     setLoading: Dispatch<SetStateAction<boolean>>
     setInitPrompt: Dispatch<SetStateAction<boolean>>
+    disabled?: boolean
 }
 
 export default function FilterPopover({image, setCurrentGenImg, setLoading, setInitPrompt}: FilterProps) {

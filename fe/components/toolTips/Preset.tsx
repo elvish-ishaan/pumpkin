@@ -28,6 +28,7 @@ interface PresetProps {
   image: File | null
   setLoading: Dispatch<SetStateAction<boolean>>
   setInitPrompt: Dispatch<SetStateAction<boolean>>
+  disabled?: boolean
 }
 
 export default function PresetPopover({ image, setCurrentGenImg, setLoading, setInitPrompt }: PresetProps) {
