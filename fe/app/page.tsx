@@ -1,6 +1,8 @@
 "use client"
 
 import Footer from "@/components/Footer"
+import { AuroraText } from "@/components/magicui/aurora-text"
+import { SparklesText } from "@/components/magicui/sparkles-text"
 import Pricing from "@/components/Pricing"
 import Testimonials from "@/components/Testimonial"
 import { Button } from "@/components/ui/button"
@@ -20,7 +22,9 @@ export default function LandingPage() {
       {/* Hero Section */}
       <section className="flex flex-col items-center text-center px-6 md:px-12 mt-20">
         <h2 className="text-3xl md:text-5xl font-bold max-w-3xl leading-snug">
-          Edit With a Prompt — No More Complex Platforms, No More Overhead
+          Edit With a <SparklesText className=" inline w-fit">
+            <AuroraText>Prompt</AuroraText>
+            </SparklesText> — No More Complex Platforms, No More Overhead
         </h2>
         <p className="text-gray-400 max-w-2xl mt-6">
           Transform your photos effortlessly with AI. Just type your prompt and let Pumpkin

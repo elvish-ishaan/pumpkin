@@ -2,6 +2,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 export default function Pricing() {
   const plans = [
@@ -41,6 +42,7 @@ export default function Pricing() {
       ],
     },
   ];
+  const router = useRouter()
 
   return (
     <section
@@ -72,7 +74,7 @@ export default function Pricing() {
                   </li>
                 ))}
               </ul>
-              <Button className="w-full rounded-md bg-blue-600 hover:bg-blue-700 text-white">
+              <Button onClick={() => router.push("/auth")} className="w-full rounded-md bg-blue-600 hover:bg-blue-700 text-white">
                 {plan.name === "Free" ? "Start Free" : "Choose Plan"}
               </Button>
             </CardContent>
