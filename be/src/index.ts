@@ -353,7 +353,6 @@ app.post("/create-subscription", async (req: Request, res: Response) => {
       plan_id: planId,
       total_count: 12, // e.g., for a yearly subscription with monthly billing
     });
-    console.log(subscription,'subscription created....')
 
     return res.status(200).json({
       success: true,

@@ -13,7 +13,6 @@ export async function verifyAuth(req: Request, res: Response, next: NextFunction
         return
     }
     const decodedData = jwt.verify(token, process.env.NEXTAUTH_SECRET!)
-    console.log(decodedData, 'decoded data')
 
     // now you have Google user info
     req.user = decodedData;
