@@ -473,6 +473,44 @@ app.get('/health', (req: Request, res: Response) => {
   })
 })
 
+app.post('/feedback', async (req: Request, res: Response) => {
+  try {
+    const {category, details} = req.body;
+    if(!category || !details){
+      return res.status(500).json({
+        success: false,
+        message: 'all parameters are required'
+      })
+    }
+    try {
+      const feedback = await prisma.feedback.create({
+        data:{
+          category,
+          details
+        }
+      })
+      if(!feedback){
+        res.status(500).json({
+          success: false,
+          message: 'something went wrong'
+        })
+      }
+      return res.status(200).json({
+        success: false,
+        message: 'feedback submitted'
+      })
+    } catch (error) {
+      console.log(error,'error in saving feedback to db')
+    }
+  } catch (error) {
+    console.log(error,'err in feed route')
+    res.status(500).json({
+      success: false,
+      message: "internal server errror"
+    })
+  }
+})
+
 app.listen(8080, () => {
   console.log('Server is running on port 8080')
 })
