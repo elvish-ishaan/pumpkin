@@ -103,6 +103,7 @@ export default function PricingModal({
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data),
+            credentials: "include"
           });
 
           const res = await result.json();

@@ -56,6 +56,7 @@ export default function PresetPopover({ image, setCurrentGenImg, setLoading, set
           Authorization: `Bearer ${session?.user?.token}`,
         },
         body: formData,
+        credentials: "include"
       })
 
       const data = await res.json()
