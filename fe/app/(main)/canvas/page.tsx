@@ -266,19 +266,19 @@ export default function Page() {
       image={currentImg} 
       setCurrentGenImg={setCurrentGenImg} 
       setLoading={setIsLoading} 
-      disabled={!(session?.user?.planType.toLowerCase() === "standard" || session?.user?.planType.toLowerCase() === "premium")}
+      disabled={!(session?.user?.planType?.toLowerCase() === "standard" || session?.user?.planType?.toLowerCase() === "premium")}
     />
     <PresetPopover 
       setInitPrompt={setIsInitPrompt}
       image={currentImg} 
       setCurrentGenImg={setCurrentGenImg} 
       setLoading={setIsLoading} 
-      disabled={!(session?.user?.planType.toLowerCase() === "standard" || session?.user?.planType.toLowerCase() === "premium")}
+      disabled={!(session?.user?.planType?.toLowerCase() === "standard" || session?.user?.planType?.toLowerCase() === "premium")}
     />
   </div>
 
   {/* Overlay lock if not subscribed */}
-  {!(session?.user?.planType.toLowerCase() === "standard" || session?.user?.planType.toLowerCase() === "premium") && (
+  {!(session?.user?.planType?.toLowerCase() === "standard" || session?.user?.planType?.toLowerCase() === "premium") && (
     <div className="absolute inset-0 bg-slate-900/70 backdrop-blur-xs flex flex-col items-center justify-center rounded-lg">
       <div className="flex flex-col items-center gap-2">
         <span className="text-slate-200 text-sm">Available on Standard & Premium</span>
