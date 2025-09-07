@@ -59,7 +59,6 @@ export default function FilterPopover({image, setCurrentGenImg, setLoading, setI
                 Authorization: `Bearer ${session?.user?.token}`,
             },
             body: formData,
-            credentials: "include"
         });
         const data = await res.json();
         if(!data.success){

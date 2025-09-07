@@ -15,9 +15,12 @@ import { filters } from './lib/filterPrompts.js';
 
 const app = express()
 
-app.use(cors())
-app.use(express.json()); 
-app.use(express.urlencoded({ extended: true })); 
+app.use(cors({
+  origin: process.env.ORIGIN_URL!
+}))
+
+app.use(express.json({ limit: "50mb" }))
+app.use(express.urlencoded({ limit: "50mb", extended: true })) 
 
 const storage = multer.memoryStorage()
 const upload = multer({ storage: storage })
@@ -28,7 +31,7 @@ app.get('/user', verifyAuth, async(req: Request, res: Response) => {
     if(!userId){
       return res.status(400).json({
         success: false,
-        message: 'User not found'
+        message: 'UserId not found'
       });
     }
 
@@ -396,7 +399,7 @@ app.post("/varify-subscription", async (req: Request, res: Response) => {
     }
 
     //update the user subscription in db
-    // Update user usage
+    try {
     const updatedUser = await prisma.user.update({
       where: {
         id: userId
@@ -405,13 +408,15 @@ app.post("/varify-subscription", async (req: Request, res: Response) => {
         planType: 'STANDARD'
       }
     })
-    console.log(updatedUser,'updated user after subscription....')
 
     return res.status(200).json({
       success: true,
       message: 'Subscription verified successfully',
       isOk: true
     });
+    } catch (error) {
+      console.log(error, 'err in updating user plan in db')
+    }
   } catch (error) {
     console.log(error,'error in verify subscription route')
     return res.status(500).json({
