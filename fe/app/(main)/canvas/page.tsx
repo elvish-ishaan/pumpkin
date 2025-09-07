@@ -171,7 +171,7 @@ export default function Page() {
     try {
       const pathname = new URL(currentGenImg as string).pathname; 
       const filename = pathname.split("/").pop();
-      const res = await fetch(`http://localhost:8080/download?imageUrl=${filename}`,{
+      const res = await fetch(`${apiUrl}/download?imageUrl=${filename}`,{
         method: "GET",
         headers: {
           "Authorization": `Bearer ${session?.user?.token}`
