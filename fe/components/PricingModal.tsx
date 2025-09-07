@@ -57,7 +57,7 @@ export default function PricingModal({
       buttonLabel: "Choose Plan",
     },
   ]
-  const {data: session} =  useSession()
+  const {data: session, update} =  useSession()
 
   const createSubscription = async (planId: string) => {
     try {
@@ -103,7 +103,6 @@ export default function PricingModal({
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data),
-            credentials: "include"
           });
 
           const res = await result.json();
@@ -111,6 +110,8 @@ export default function PricingModal({
            if(res.isOk){
             alert("Subscription successful")
             console.log("Subscription successful");
+            //update the session to get latest data
+            await update()
             onOpenChange(false)
            }
         },
