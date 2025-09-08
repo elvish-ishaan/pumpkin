@@ -55,7 +55,6 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://pumpkin.dryink.space",
   },
-  themeColor: "#0B0E13",
 };
 
 export default function RootLayout({
