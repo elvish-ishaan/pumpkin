@@ -12,6 +12,7 @@ import { checkUsage } from './middleware/analytics.js';
 import { razorpay } from './configs/payment.js';
 import crypto from 'crypto';
 import { filters } from './lib/filterPrompts.js';
+import { sendEmail } from './configs/mail.js';
 
 const app = express()
 
@@ -408,6 +409,13 @@ app.post("/varify-subscription", async (req: Request, res: Response) => {
         planType: 'STANDARD'
       }
     })
+
+    try {
+      await sendEmail(updatedUser.email, "Your Pumpkin AI Plan Has Been Successfully Upgraded!")
+      console.log('email sent successfully')
+    } catch (error) {
+      console.log(error,'err in sending mail after payment varification')
+    }
 
     return res.status(200).json({
       success: true,
