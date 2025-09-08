@@ -12,6 +12,7 @@ import { checkUsage } from './middleware/analytics.js';
 import { razorpay } from './configs/payment.js';
 import crypto from 'crypto';
 import { filters } from './lib/filterPrompts.js';
+import { sendEmail } from './configs/mail.js';
 
 const app = express()
 
@@ -409,6 +410,13 @@ app.post("/varify-subscription", async (req: Request, res: Response) => {
       }
     })
 
+    try {
+      await sendEmail(updatedUser.email, "Your Pumpkin AI Plan Has Been Successfully Upgraded!")
+      console.log('email sent successfully')
+    } catch (error) {
+      console.log(error,'err in sending mail after payment varification')
+    }
+
     return res.status(200).json({
       success: true,
       message: 'Subscription verified successfully',
@@ -471,6 +479,44 @@ app.get('/health', (req: Request, res: Response) => {
     success: true,
     message: 'System is running'
   })
+})
+
+app.post('/feedback', async (req: Request, res: Response) => {
+  try {
+    const {category, details} = req.body;
+    if(!category || !details){
+      return res.status(500).json({
+        success: false,
+        message: 'all parameters are required'
+      })
+    }
+    try {
+      const feedback = await prisma.feedback.create({
+        data:{
+          category,
+          details
+        }
+      })
+      if(!feedback){
+        res.status(500).json({
+          success: false,
+          message: 'something went wrong'
+        })
+      }
+      return res.status(200).json({
+        success: false,
+        message: 'feedback submitted'
+      })
+    } catch (error) {
+      console.log(error,'error in saving feedback to db')
+    }
+  } catch (error) {
+    console.log(error,'err in feed route')
+    res.status(500).json({
+      success: false,
+      message: "internal server errror"
+    })
+  }
 })
 
 app.listen(8080, () => {

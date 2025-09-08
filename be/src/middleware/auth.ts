@@ -1,5 +1,5 @@
 import type { NextFunction, Request, Response } from "express";
-import jwt from 'jsonwebtoken'
+import jwt, { type JwtPayload } from 'jsonwebtoken'
 import prisma from "../configs/prismaClient.js";
 
 
@@ -14,7 +14,10 @@ export async function verifyAuth(req: Request, res: Response, next: NextFunction
         })
         return
     }
-    const decodedData = jwt.verify(token, process.env.NEXTAUTH_SECRET!)
+    const decodedData = jwt.verify(token, process.env.NEXTAUTH_SECRET!) as JwtPayload & {
+      userEmail: string;
+      userId: string
+    }
 
     //find user in db
     try {

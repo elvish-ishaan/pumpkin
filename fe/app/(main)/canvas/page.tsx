@@ -22,6 +22,7 @@ import {
 import { signOut, useSession } from "next-auth/react"
 import Image from "next/image"
 import { useState } from "react"
+import { toast } from "sonner"
 
 export default function Page() {
   const [prompt, setPrompt] = useState("")
@@ -43,7 +44,7 @@ export default function Page() {
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
     if (!file) {
-      alert("Please upload an image file.")
+      toast.info("Please upload an image file.")
       return
     }
     //remove any generated images
@@ -57,8 +58,8 @@ export default function Page() {
   }
 
   const handleGenerate = async () => {
-    if (!prompt && !currentImg) {
-      alert("Please enter a prompt or upload an image.")
+    if (!prompt || !currentImg) {
+      toast.info("Please enter a prompt or upload an image.")
       return
     }
     try {
@@ -68,7 +69,7 @@ export default function Page() {
         formData.append("image", currentImg)
       }
       setIsLoading(true)
-      const res = await fetch(`${apiUrl}/generate-image`,{
+      const res = await fetch(`${apiUrl}/generate-image`, {
         headers: {
           "Authorization": `Bearer ${session?.user?.token}`
         },
@@ -84,7 +85,7 @@ export default function Page() {
           setPricingModalOpen(true)
           return
         }
-        alert(data?.message || "Generation failed!")
+        toast.error(data?.message || "Generation failed!")
         return
       }
       //update the user session
@@ -146,7 +147,7 @@ export default function Page() {
       })
       const data = await res.json()
       if (!data.success) {
-        alert(data?.message || "Follow-up request failed!")
+        toast.error(data?.message || "Follow-up request failed!")
         return
       }
       //update the session
@@ -159,7 +160,7 @@ export default function Page() {
       }
     } catch (error) {
       console.log(error, 'error while follow up............')
-      alert('Follow-up request failed!')
+      toast.error('Follow-up request failed!')
     }finally{
       setIsLoading(false)
     }
@@ -171,7 +172,7 @@ export default function Page() {
     try {
       const pathname = new URL(currentGenImg as string).pathname; 
       const filename = pathname.split("/").pop();
-      const res = await fetch(`http://localhost:8080/download?imageUrl=${filename}`,{
+      const res = await fetch(`${apiUrl}/download?imageUrl=${filename}`,{
         method: "GET",
         headers: {
           "Authorization": `Bearer ${session?.user?.token}`
@@ -179,7 +180,7 @@ export default function Page() {
       });
       const data = await res.json()
      if(!data.success){
-      alert("Download failed!")
+      toast.error("Download failed!")
       return
      }
 

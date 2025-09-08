@@ -27,3 +27,10 @@ model User {
   noOfPrompts Int @default(0)
   planType   PlanType @default(FREE)
 }
+
+model Feedback {
+  id   String  @unique @default(cuid())
+  category String
+  details  String
+  created  DateTime @default(now())
+}

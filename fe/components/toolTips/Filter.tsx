@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/popover"
 import { Sparkles } from "lucide-react"
 import { useSession } from "next-auth/react"
+import { toast } from "sonner"
 
 const FILTERS: Record<string, string[]> = {
   "Basic Adjustments": ["Brightness", "Contrast", "Exposure", "Highlights", "Shadows", "Saturation", "Vibrance", "Warmth"],
@@ -43,7 +44,7 @@ export default function FilterPopover({image, setCurrentGenImg, setLoading, setI
   const handleApply = async () => {
     //if file not preset
     if(!image || !selectedFilter){
-        alert("no file choosen or filter choosen")
+        toast.info("no file choosen or filter choosen")
         return
     }
     try {
@@ -62,7 +63,7 @@ export default function FilterPopover({image, setCurrentGenImg, setLoading, setI
         });
         const data = await res.json();
         if(!data.success){
-            alert(data.message || "Error applying filter")
+            toast.error(data.message || "Error applying filter")
             return
         }
         //set the current generated image
