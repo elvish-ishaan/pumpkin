@@ -8,7 +8,7 @@ export default function Pricing() {
   const plans = [
     {
       name: "Free",
-      price: "$0",
+      price: "₹0",
       description: "Perfect for trying out Pumpkin AI.",
       features: [
         "3 image uploads per month",
