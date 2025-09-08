@@ -13,11 +13,11 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "Pumpkin AI - Edit with Just a Prompt",
-    template: "%s | Pumpkin AI",
+    default: "Pumpkin - Edit with Just a Prompt",
+    template: "%s | Pumpkin",
   },
   description:
-    "Pumpkin AI makes photo editing effortless — forget complex tools, just type a prompt and let AI transform your images instantly.",
+    "Pumpkin makes photo editing effortless — forget complex tools, just type a prompt and let AI transform your images instantly.",
   keywords: [
     "AI photo editor",
     "image editing",
@@ -27,43 +27,34 @@ export const metadata: Metadata = {
     "AI filters",
     "AI presets",
   ],
-  // authors: [{ name: "Pumpkin AI Team", url: "https://pumpkin.ai" }],
-  // creator: "Pumpkin AI",
-  // publisher: "Pumpkin AI",
-  // openGraph: {
-  //   type: "website",
-  //   url: "https://pumpkin.ai",
-  //   title: "Pumpkin AI - Edit with Just a Prompt",
-  //   description:
-  //     "Pumpkin AI is your next-gen photo editing tool. Just describe your edits, and we’ll make them happen.",
-  //   siteName: "Pumpkin AI",
-  //   images: [
-  //     {
-  //       url: "/og-image.png", // replace with your OG image
-  //       width: 1200,
-  //       height: 630,
-  //       alt: "Pumpkin AI Hero Preview",
-  //     },
-  //   ],
-  // },
-  // twitter: {
-  //   card: "summary_large_image",
-  //   site: "@pumpkinai", // replace with your handle
-  //   title: "Pumpkin AI - Edit with Just a Prompt",
-  //   description:
-  //     "Skip complex software. Edit your photos by simply typing what you want — powered by Pumpkin AI.",
-  //   images: ["/og-image.png"], // same as above
-  // },
-  // icons: {
-  //   icon: "/favicon.ico",
-  //   apple: "/apple-touch-icon.png",
-  // },
-  // manifest: "/site.webmanifest",
-  // metadataBase: new URL("https://pumpkin.ai"),
-  // alternates: {
-  //   canonical: "https://pumpkin.ai",
-  // },
-  // themeColor: "#0B0E13",
+  authors: [{ name: "Pumpkin Team", url: "https://pumpkin.dryink.space" }],
+  creator: "Dryink",
+  publisher: "Pumpkin",
+  openGraph: {
+    type: "website",
+    url: "https://pumpkin.dryink.space",
+    title: "Pumpkin - Edit with Just a Prompt",
+    description:
+      "Pumpkin is your next-gen photo editing tool. Just describe your edits, and we’ll make them happen.",
+    siteName: "Pumpkin",
+    images: [
+      {
+        url: "/pumpkin_og_image.png", // replace with your OG image
+        width: 1200,
+        height: 630,
+        alt: "Pumpkin Hero Preview",
+      },
+    ],
+  },
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
+  manifest: "/site.webmanifest",
+  metadataBase: new URL("https://pumpkin.dryink.space"),
+  alternates: {
+    canonical: "https://pumpkin.dryink.space",
+  },
 };
 
 export default function RootLayout({
@@ -75,6 +66,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="manifest" href="/manifest.json" />
       </head>
       <body
         className={`${inter.variable} font-main  antialiased tracking-wide bg-[#0B0E13] text-white`}
