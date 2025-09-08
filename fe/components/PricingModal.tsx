@@ -34,7 +34,7 @@ export default function PricingModal({
   const plans = [
     {
       name: "Standard",
-      price: "$5/mo",
+      price: "₹447/mo",
       planId: process.env.NEXT_PUBLIC_RAZORPAY_PLAN_ID_STANDARD!,
       sub: "For creators who edit regularly.",
       features: [
@@ -48,7 +48,7 @@ export default function PricingModal({
     },
     {
       name: "Premium",
-      price: "$15/mo",
+      price: "₹1,323/mo",
       planId: process.env.NEXT_PUBLIC_RAZORPAY_PLAN_ID_PREMIUM!,
       sub: "Unlimited everything for power users.",
       features: [

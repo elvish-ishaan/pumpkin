@@ -19,7 +19,7 @@ export default function Pricing() {
     },
     {
       name: "Standard",
-      price: "$5/mo",
+      price: "₹447/mo",
       description: "Great for regular creators and professionals.",
       features: [
         "Unlimited image uploads",
@@ -31,7 +31,7 @@ export default function Pricing() {
     },
     {
       name: "Premium",
-      price: "$15/mo",
+      price: "₹1,323/mo",
       description: "For power users who want it all.",
       features: [
         "Unlimited image uploads",
