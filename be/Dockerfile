@@ -3,7 +3,7 @@ FROM node:alpine
 WORKDIR /app
 
 COPY package* .
-COPY prisma ./prisma
+COPY ./prisma .
 
 RUN npm install
 RUN npx prisma generate
