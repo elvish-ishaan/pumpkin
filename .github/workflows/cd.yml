@@ -21,7 +21,7 @@ jobs:
     - name: Build and Push Docker image
       uses: docker/build-push-action@v2
       with:
-        context: .
+        context: ./be
         file: ./be/Dockerfile
         push: true
         tags: ${{ secrets.DOCKER_USERNAME }}/pumpkin-be:latest  
