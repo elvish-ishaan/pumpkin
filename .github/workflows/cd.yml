@@ -24,7 +24,7 @@ jobs:
         context: .
         file: ./be/Dockerfile
         push: true
-        tags: elvish-ishaan/pumpkin-be:latest  
+        tags: ${{ secrets.DOCKER_USERNAME }}/pumpkin-be:latest  
 
     - name: Verify Pushed Image
-      run: docker pull elvish-ishaan/pumpkin-be:latest
+      run: docker pull ${{ secrets.DOCKER_USERNAME }}/pumpkin-be:latest
