@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function Footer() {
   return (
@@ -18,9 +19,9 @@ export default function Footer() {
         <div>
           <h3 className="text-white font-medium mb-4">Product</h3>
           <ul className="space-y-2 text-sm">
-            <li><a href="#features" className="hover:text-white">Features</a></li>
-            <li><a href="#pricing" className="hover:text-white">Pricing</a></li>
-            <li><a href="#contact" className="hover:text-white">Contact</a></li>
+            <li><Link href="#features" className="hover:text-white">Features</Link></li>
+            <li><Link href="#pricing" className="hover:text-white">Pricing</Link></li>
+            <li><Link href="/support" className="hover:text-white">Contact</Link></li>
           </ul>
         </div>
 
@@ -28,9 +29,9 @@ export default function Footer() {
         <div>
           <h3 className="text-white font-medium mb-4">Resources</h3>
           <ul className="space-y-2 text-sm">
-            <li><a href="#docs" className="hover:text-white">Documentation</a></li>
-            <li><a href="#blog" className="hover:text-white">Blog</a></li>
-            <li><a href="#support" className="hover:text-white">Support</a></li>
+            <li><Link href="#docs" className="hover:text-white">Documentation</Link></li>
+            <li><Link href="#blog" className="hover:text-white">Blog</Link></li>
+            <li><Link href="/support" className="hover:text-white">Support</Link></li>
           </ul>
         </div>
 
@@ -54,8 +55,8 @@ export default function Footer() {
       <div className="mt-12 border-t border-gray-800 pt-6 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
         <p>© {new Date().getFullYear()} Pumpkin. All rights reserved.</p>
         <div className="flex gap-6 mt-4 md:mt-0">
-          <a href="#privacy" className="hover:text-white">Privacy Policy</a>
-          <a href="#terms" className="hover:text-white">Terms of Service</a>
+          <Link href="#privacy" className="hover:text-white">Privacy Policy</Link>
+          <Link href="#terms" className="hover:text-white">Terms of Service</Link>
         </div>
       </div>
     </footer>

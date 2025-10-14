@@ -9,6 +9,9 @@ import {
 import { Button } from "@/components/ui/button"
 import Script from "next/script"
 import { useSession } from "next-auth/react";
+import { useState } from "react";
+import { PaymentSuccessModal } from "./modals/PaymentSuccess";
+import PaymentFailed from "./modals/PaymentFailed";
 
 
 
@@ -31,7 +34,7 @@ export default function PricingModal({
   const plans = [
     {
       name: "Standard",
-      price: "$5/mo",
+      price: "₹447/mo",
       planId: process.env.NEXT_PUBLIC_RAZORPAY_PLAN_ID_STANDARD!,
       sub: "For creators who edit regularly.",
       features: [
@@ -45,7 +48,7 @@ export default function PricingModal({
     },
     {
       name: "Premium",
-      price: "$15/mo",
+      price: "₹1,323/mo",
       planId: process.env.NEXT_PUBLIC_RAZORPAY_PLAN_ID_PREMIUM!,
       sub: "Unlimited everything for power users.",
       features: [
@@ -57,7 +60,9 @@ export default function PricingModal({
       buttonLabel: "Choose Plan",
     },
   ]
-  const {data: session} =  useSession()
+  const {data: session, update} =  useSession()
+  const [isPaymentSuccess, setIsPaymentSuccess] = useState(false)
+  const [isPaymentFailed, setIsPaymentFailed] = useState(false)
 
   const createSubscription = async (planId: string) => {
     try {
@@ -108,9 +113,11 @@ export default function PricingModal({
           const res = await result.json();
            //show user taost for sucessful payment
            if(res.isOk){
-            alert("Subscription successful")
             console.log("Subscription successful");
+            //update the session to get latest data
+            await update()
             onOpenChange(false)
+            //show payment success modal
            }
         },
         prefill: { name, email: "example@gmail.com" },
@@ -120,8 +127,8 @@ export default function PricingModal({
       const paymentObject = new window.Razorpay(options);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       paymentObject.on("payment.failed", (response: any) => {
-        alert("Payment failed")
         console.error("Payment failed:", response.error);
+        setIsPaymentFailed(true)
       });
       paymentObject.open();
     } catch (error) {
@@ -131,6 +138,8 @@ export default function PricingModal({
 
   return (
     <>
+    <PaymentSuccessModal open={isPaymentSuccess} onClose={()=> setIsPaymentSuccess(false)}/>
+    <PaymentFailed open={isPaymentFailed} onClose={() => setIsPaymentFailed(false)}/>
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className=" w-[100vw] bg-slate-900 text-white border border-slate-700 rounded-2xl px-6 py-6">
         <DialogHeader>

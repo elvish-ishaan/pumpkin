@@ -3,6 +3,7 @@
 import { useSession } from "next-auth/react"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import UsageTracker from "./UsageBox"
+import ReportFeedback from "./utils/Report"
 
 
 export default function UserProfile() {
@@ -18,6 +19,7 @@ export default function UserProfile() {
 
   return (
     <>
+    <ReportFeedback/>
     <UsageTracker
   plan={session.user?.planType || "free"}
   imagesUsed={session.user?.imagesUploaded || 0}

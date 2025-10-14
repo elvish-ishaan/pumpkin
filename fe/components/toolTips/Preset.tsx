@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/popover"
 import { Palette } from "lucide-react"
 import { useSession } from "next-auth/react"
+import { toast } from "sonner"
 
 const PRESETS: Record<string, string[]> = {
   "Portrait": ["Soft Glow", "Vintage Portrait", "Cinematic Portrait", "Bright & Airy", "Moody Portrait"],
@@ -39,7 +40,7 @@ export default function PresetPopover({ image, setCurrentGenImg, setLoading, set
 
   const handleApply = async () => {
     if (!image || !selectedPreset) {
-      alert("No file chosen or preset selected")
+      toast.info("No file chosen or preset selected")
       return
     }
 
@@ -60,7 +61,7 @@ export default function PresetPopover({ image, setCurrentGenImg, setLoading, set
 
       const data = await res.json()
       if (!data.success) {
-        alert(data.message || "Error applying preset")
+        toast.error(data.message || "Error applying preset")
         return
       }
 

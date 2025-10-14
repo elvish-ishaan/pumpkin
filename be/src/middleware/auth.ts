@@ -1,5 +1,7 @@
 import type { NextFunction, Request, Response } from "express";
-import jwt from 'jsonwebtoken'
+import jwt, { type JwtPayload } from 'jsonwebtoken'
+import prisma from "../configs/prismaClient.js";
+
 
 export async function verifyAuth(req: Request, res: Response, next: NextFunction) {
   try {
@@ -12,7 +14,26 @@ export async function verifyAuth(req: Request, res: Response, next: NextFunction
         })
         return
     }
-    const decodedData = jwt.verify(token, process.env.NEXTAUTH_SECRET!)
+    const decodedData = jwt.verify(token, process.env.NEXTAUTH_SECRET!) as JwtPayload & {
+      userEmail: string;
+      userId: string
+    }
+
+    //find user in db
+    try {
+      const user = await prisma.user.upsert({
+        where: {
+          id: decodedData?.userId || ""
+        },
+        update:{},
+        create: {
+          id: decodedData?.userId as string,
+          email: decodedData.userEmail
+        }
+      })
+    } catch (error) {
+      console.log(error,'err in creating user in db')
+    }
 
     // now you have Google user info
     req.user = decodedData;
