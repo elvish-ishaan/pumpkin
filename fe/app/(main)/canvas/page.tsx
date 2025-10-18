@@ -222,7 +222,7 @@ export default function Page() {
   `}
 >
   {/* Mobile close button */}
-  <div className="md:hidden flex justify-end p-4">
+  <div className="md:hidden flex justify-end p-2">
     <Button
       variant="ghost"
       size="sm"
@@ -234,7 +234,7 @@ export default function Page() {
   </div>
 
   {/* Sidebar content */}
-  <div className="flex flex-col justify-between h-[100vh] p-4 md:p-6">
+  <div className="flex flex-col justify-between h-[90vh] md:h-[100vh] p-4 md:p-6">
     {/* Logo */}
     <span className="px-2 font-semibold text-lg tracking-widest text-white mb-4">
       PUMPKIN
@@ -510,7 +510,7 @@ export default function Page() {
 
       {/* Right Sidebar - Desktop Only */}
       <aside className={`
-        fixed md:relative top-0 right-0 z-50 w-80 h-[100vh] bg-slate-800/95 md:bg-slate-800/50 
+        fixed md:relative top-0 right-0 z-50 w-80 h-[80vh] bg-slate-800/95 md:bg-slate-800/50 
         transform transition-transform duration-300 ease-in-out
         ${isRightSidebarOpen ? 'translate-x-0' : 'translate-x-full md:translate-x-0'}
         hidden md:flex md:flex-col

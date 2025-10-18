@@ -9,6 +9,8 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import Navbar from "@/components/ui/Navbar"
 import { useRouter } from "next/navigation"
+import ReactCompareImage from 'react-compare-image';
+
 
 export default function LandingPage() {
   const router = useRouter()
@@ -68,8 +70,19 @@ export default function LandingPage() {
         </Card>
       </section>
 
-      {/* Call to Action */}
-      <section className="flex flex-col items-center text-center px-6 md:px-12 mt-24 mb-20">
+      <div className=" hidden md:flex flex-col justify-center items-center p-5 my-10">
+        <h1 className=" text-5xl font-bold my-4">Feel The <span className=" text-blue-600">Diffrence</span></h1>
+        <div className=" h-[50vh] w-[50vw] rounded-lg">
+        <ReactCompareImage hover={true}
+         leftImageLabel="Before"
+         rightImageLabel="After"
+         leftImage="https://res.cloudinary.com/diqurtmad/image/upload/v1760774480/pumpkinImage_eths6z.png"
+         rightImage="https://res.cloudinary.com/diqurtmad/image/upload/v1760774480/editedImage_kyy5b3.png" />
+      </div>
+      </div>
+
+            {/* Call to Action */}
+      <section className="flex flex-col items-center text-center px-6 md:px-12 mt-44 mb-20">
         <h3 className="text-2xl md:text-3xl font-bold">Start Creating Today</h3>
         <p className="text-gray-400 max-w-xl mt-4">
           Unlock the full potential of your images with Pumpkin’s powerful AI editing studio.
@@ -78,6 +91,7 @@ export default function LandingPage() {
           Get Started Free
         </Button>
       </section>
+
       <Pricing/>
       <Testimonials/>
       <Footer/>

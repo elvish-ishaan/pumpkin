@@ -49,7 +49,7 @@ export default function ReportFeedback() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="rounded-md bg-blue-600 hover:bg-blue-700 text-white gap-2 m-5">
+        <Button className="rounded-md bg-blue-600 hover:bg-blue-700 text-white gap-2 m-5 hidden md:flex">
           <MessageSquare className="w-4 h-4" />
           Hey? Tap me
         </Button>

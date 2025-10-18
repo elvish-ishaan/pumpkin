@@ -1,0 +1,33 @@
+# Pumpkin - Edit with Just a Prompt
+
+Pumpkin makes photo editing effortless — forget complex tools, just type a prompt and let AI transform your images instantly.
+
+## Overview
+
+[Pumpkin](https://pumpkin.dryink.space/): An innovative photo editing tool that simplifies the editing process by allowing users to edit images through simple text prompts, leveraging AI technology for instant transformations.
+
+## Features
+
+[Features](https://pumpkin.dryink.space/#features): This section outlines the key functionalities of Pumpkin, including its user-friendly interface, AI-driven editing capabilities, and various customization options that enhance the editing experience.
+
+## Pricing
+
+[Pricing](https://pumpkin.dryink.space/#pricing): Detailed information about the different pricing tiers available for Pumpkin, including any free trials, subscription models, and what features are included at each price point.
+
+## User Feedback
+
+[Testimonials](https://pumpkin.dryink.space/#testimonials): A collection of user reviews and testimonials that highlight the effectiveness and ease of use of Pumpkin, showcasing real-world applications and user satisfaction.
+
+## Support and Contact
+
+[Contact](https://pumpkin.dryink.space/support): Information on how to get in touch with the Pumpkin support team for inquiries, assistance, or feedback regarding the service.
+
+## Additional Resources
+
+[Documentation](https://pumpkin.dryink.space/#docs): Comprehensive guides and resources for users to understand how to utilize Pumpkin effectively, including tutorials and troubleshooting tips.
+
+[Blog](https://pumpkin.dryink.space/#blog): A blog featuring articles, tips, and updates related to photo editing, AI technology, and the latest news about Pumpkin.
+
+[Privacy Policy](https://pumpkin.dryink.space/#privacy): Details on how Pumpkin handles user data, privacy practices, and compliance with data protection regulations.
+
+[Terms of Service](https://pumpkin.dryink.space/#terms): The legal agreements and terms that govern the use of Pumpkin, outlining user rights and responsibilities.
