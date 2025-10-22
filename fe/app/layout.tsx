@@ -55,6 +55,18 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://pumpkin.dryink.space",
   },
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-snippet": -1,
+      "max-image-preview": "large",
+      "max-video-preview": -1,
+    },
+  }
 };
 
 export default function RootLayout({
