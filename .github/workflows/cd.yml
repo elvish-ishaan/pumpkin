@@ -3,8 +3,12 @@ name: Build and Deploy to Docker Hub
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - "be/**"
   pull_request:
     branches: [ "main" ]
+    paths:
+      - "be/**"
 
 jobs:
   build-and-push:

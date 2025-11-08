@@ -519,6 +519,13 @@ app.post('/feedback', async (req: Request, res: Response) => {
   }
 })
 
+app.get("/", (req: Request, res: Response) => {
+  return res.json({
+    success: true,
+    message: "server is running"
+  })
+})
+
 app.listen(8080, () => {
   console.log('Server is running on port 8080')
 })
