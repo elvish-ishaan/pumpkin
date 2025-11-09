@@ -99,7 +99,6 @@ app.post('/generate-image', verifyAuth, checkUsage, upload.single('image'), asyn
         },
       });
     }
-
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash-image-preview",
       contents: contents,
