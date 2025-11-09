@@ -25,6 +25,3 @@ jobs:
           run: cd be && npm run build
 
           #add run build step for fe also
-
-
-    
