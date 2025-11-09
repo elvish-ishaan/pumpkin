@@ -520,6 +520,7 @@ app.post('/feedback', async (req: Request, res: Response) => {
 })
 
 app.get("/", (req: Request, res: Response) => {
+  console.log("server is running")
   return res.json({
     success: true,
     message: "server is running"
