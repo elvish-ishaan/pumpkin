@@ -1,3 +1,7 @@
 ./dist
 ./node_modules
 ./postgres-data
+.git
+.gitignore
+.env.example
+.env
