@@ -1,16 +1,35 @@
 "use client"
 
+import HoverBtn from "@/components/buttons/hoverBtn"
+import HoverCard from "@/components/cards/hoverCard"
 import Footer from "@/components/Footer"
 import { AuroraText } from "@/components/magicui/aurora-text"
 import { SparklesText } from "@/components/magicui/sparkles-text"
 import Pricing from "@/components/Pricing"
 import Testimonials from "@/components/Testimonial"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import Navbar from "@/components/ui/Navbar"
 import { useRouter } from "next/navigation"
 import ReactCompareImage from 'react-compare-image';
 
+
+const features = [
+  {
+    id: 1,
+    title: "Smart Enhancements",
+    description: "One-click AI upgrades that make your images pop instantly."
+  },
+  {
+    id: 2,
+    title: "Creative Styles",
+    description: "Choose from dozens of professional-grade filters and looks."
+  },
+  {
+    id: 3,
+    title: "Seamless Workflow",
+    description: "Drag & drop, adjust settings, and export with ease."
+  }
+]
 
 export default function LandingPage() {
   const router = useRouter()
@@ -33,10 +52,8 @@ export default function LandingPage() {
           handle the rest — faster, simpler, and smarter.
         </p>
         <div className="flex gap-4 mt-8">
-          <Button onClick={()=> router.push("/auth")} className="rounded-md bg-blue-600 hover:bg-blue-700 text-white px-6">
-            Try Now
-          </Button>
-          <Button variant="secondary" className="rounded-md bg-[#1A1D24] text-gray-200 hover:bg-[#22252E] px-6">
+          <HoverBtn onClick={()=> router.push("/auth")} Text="Get Started"/>
+          <Button variant="secondary" className="rounded-md bg-[#1A1D24] h-[2.6rem] text-gray-200 hover:bg-[#22252E] px-6">
             Learn More
           </Button>
         </div>
@@ -44,30 +61,9 @@ export default function LandingPage() {
 
       {/* Features */}
       <section id="features" className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto px-6 md:px-12 mt-20">
-        <Card className="bg-[#11141B] border-none shadow-md rounded-lg">
-          <CardHeader>
-            <CardTitle className="text-white">Smart Enhancements</CardTitle>
-          </CardHeader>
-          <CardContent className="text-gray-400">
-            One-click AI upgrades that make your images pop instantly.
-          </CardContent>
-        </Card>
-        <Card className="bg-[#11141B] border-none shadow-md rounded-lg">
-          <CardHeader>
-            <CardTitle className="text-white">Creative Styles</CardTitle>
-          </CardHeader>
-          <CardContent className="text-gray-400">
-            Choose from dozens of professional-grade filters and looks.
-          </CardContent>
-        </Card>
-        <Card className="bg-[#11141B] border-none shadow-md rounded-lg">
-          <CardHeader>
-            <CardTitle className="text-white">Seamless Workflow</CardTitle>
-          </CardHeader>
-          <CardContent className="text-gray-400">
-            Drag & drop, adjust settings, and export with ease.
-          </CardContent>
-        </Card>
+        {
+          features.map( f => <HoverCard key={f.id} title={f.title} description={f.description}/>)
+        }
       </section>
 
       <div className=" hidden md:flex flex-col justify-center items-center p-5 my-10">

@@ -100,10 +100,10 @@ export default function PresetPopover({ image, setCurrentGenImg, setLoading, set
               <Button
                 key={cat}
                 variant={selectedCategory === cat ? "default" : "ghost"}
-                className={`w-full justify-start text-xs md:text-sm rounded-md
+                className={`w-full justify-center text-xs md:text-sm rounded-md
                   ${selectedCategory === cat
-                    ? "bg-purple-600 hover:bg-purple-700 text-white"
-                    : "text-slate-300 hover:text-white hover:bg-slate-700/50"}`}
+                    ? "bg-blue-600 hover:bg-blue-700 text-white border-blue-600" 
+                    : "bg-slate-800/50 border-slate-700 text-slate-300 hover:bg-slate-700/70 hover:text-white"}`}
                 onClick={() => setSelectedCategory(cat)}
               >
                 {cat}

@@ -24,7 +24,7 @@ const FILTERS: Record<string, string[]> = {
   "Modern/Trendy": ["Matte", "Cinematic", "Neon", "Cyberpunk", "Pastel", "Moody"],
   "Nature Enhancers": ["Sky Enhancer", "Foliage Boost", "Sunset/Sunrise Tints"],
   "Special Effects": ["Double Exposure", "Glitch", "Dispersion", "Light Streaks", "Bokeh"],
-  "AI-Powered": ["Style Transfer (Van Gogh, Picasso)", "Auto-Enhance", "Background Removal"],
+  "AI-Powered": [ "Auto-Enhance", "Background Removal"],
 }
 
 interface FilterProps {
@@ -98,7 +98,7 @@ export default function FilterPopover({image, setCurrentGenImg, setLoading, setI
         {/* Content */}
         <div className="flex flex-1 overflow-hidden">
           {/* Categories (left column) */}
-          <div className="w-48 border-r border-slate-700 overflow-y-auto p-3 space-y-2">
+          <div className="w-48 border-r border-slate-700 overflow-y-auto p-3 space-y-1">
             {Object.keys(FILTERS).map((cat) => (
               <Button
                 key={cat}
@@ -123,7 +123,7 @@ export default function FilterPopover({image, setCurrentGenImg, setLoading, setI
                 className={`w-full justify-center text-xs md:text-sm rounded-md
                   ${selectedFilter === f 
                     ? "bg-blue-600 hover:bg-blue-700 text-white border-blue-600" 
-                    : "bg-slate-800/50 border-slate-700 text-slate-300 hover:bg-slate-700/70"}`}
+                    : "bg-slate-800/50 border-slate-700 text-slate-300 hover:bg-slate-700/70 hover:textwhi"}`}
                 onClick={() => setSelectedFilter(f)}
               >
                 {f}
