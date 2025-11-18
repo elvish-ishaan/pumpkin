@@ -2,6 +2,7 @@
 
 import HoverCard from "@/components/cards/hoverCard"
 import Footer from "@/components/Footer"
+import Gallery from "@/components/Gallery"
 import { AuroraText } from "@/components/magicui/aurora-text"
 import { SparklesText } from "@/components/magicui/sparkles-text"
 import Pricing from "@/components/Pricing"
@@ -77,7 +78,7 @@ export default function LandingPage() {
       </div>
 
             {/* Call to Action */}
-      <section className="flex flex-col items-center text-center px-6 md:px-12 mt-44 mb-20">
+      <section className="flex flex-col items-center text-center px-6 md:px-12 mt-8 md:mt-44 lg:mt-44 mb-20">
         <h3 className="text-2xl md:text-3xl font-bold">Start Creating Today</h3>
         <p className="text-gray-400 max-w-xl mt-4">
           Unlock the full potential of your images with Pumpkin’s powerful AI editing studio.
@@ -86,7 +87,7 @@ export default function LandingPage() {
           Get Started Free
         </Button>
       </section>
-
+      <Gallery/>
       <Pricing/>
       <Testimonials/>
       <Footer/>
