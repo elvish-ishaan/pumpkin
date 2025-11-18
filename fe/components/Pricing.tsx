@@ -1,3 +1,6 @@
+"use client";
+
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const plans = [
@@ -39,6 +42,7 @@ const plans = [
 ];
 
 export default function Pricing() {
+  const router = useRouter()
   return (
     <section className="w-full py-16 text-gray-800">
       <div className="max-w-6xl mx-auto px-6 text-center">
@@ -66,7 +70,7 @@ export default function Pricing() {
                 ))}
               </ul>
 
-              <button className="mt-8 w-full py-3 rounded-xl bg-sky-600 text-white font-semibold hover:bg-sky-700 transition">
+              <button onClick={() => router.push("/auth")} className="mt-8 w-full py-3 rounded-xl bg-sky-600 text-white font-semibold hover:bg-sky-700 transition">
                 {plan.name === "Free" ? "Start for Free" : "Get Started"}
               </button>
             </div>

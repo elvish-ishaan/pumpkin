@@ -1,6 +1,5 @@
 "use client"
 
-import HoverBtn from "@/components/buttons/hoverBtn"
 import HoverCard from "@/components/cards/hoverCard"
 import Footer from "@/components/Footer"
 import { AuroraText } from "@/components/magicui/aurora-text"
@@ -44,7 +43,7 @@ export default function LandingPage() {
       <section className="flex flex-col items-center text-center px-6 md:px-12 mt-20">
         <h2 className="text-3xl md:text-5xl font-bold max-w-3xl leading-snug">
           Edit With a <SparklesText className=" inline w-fit">
-            <AuroraText>Prompt</AuroraText>
+            <AuroraText className=" text-5xl">Prompt</AuroraText>
             </SparklesText> — No More Complex Platforms, No More Overhead
         </h2>
         <p className="text-gray-400 max-w-2xl mt-6">
@@ -52,7 +51,7 @@ export default function LandingPage() {
           handle the rest — faster, simpler, and smarter.
         </p>
         <div className="flex gap-4 mt-8">
-          <HoverBtn onClick={()=> router.push("/auth")} Text="Get Started"/>
+          <Button className="rounded-md h-[2.6rem] text-gray-200 bg-blue-600 hover:bg-blue-700 px-6" onClick={()=> router.push("/auth")}>Get Startd</Button>
           <Button variant="secondary" className="rounded-md bg-[#1A1D24] h-[2.6rem] text-gray-200 hover:bg-[#22252E] px-6">
             Learn More
           </Button>
@@ -60,7 +59,7 @@ export default function LandingPage() {
       </section>
 
       {/* Features */}
-      <section id="features" className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto px-6 md:px-12 mt-20">
+      <section id="features" className="grid grid-cols-1 overflow-x-hidden md:grid-cols-3 gap-6 max-w-6xl mx-auto px-6 md:px-12 mt-20">
         {
           features.map( f => <HoverCard key={f.id} title={f.title} description={f.description}/>)
         }
