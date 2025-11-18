@@ -6,8 +6,8 @@ import PricingModal from "@/components/PricingModal"
 import FilterPopover from "@/components/toolTips/Filter"
 import PresetPopover from "@/components/toolTips/Preset"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Slider } from "@/components/ui/slider"
+// import { Input } from "@/components/ui/input"
+// import { Slider } from "@/components/ui/slider"
 import { Textarea } from "@/components/ui/textarea"
 import UserProfile from "@/components/UserProfile"
 import { FREE_PLAN_ERR, PREMIUM_PLAN_ERR, STANDARD_PLAN_ERR } from "@/lib/apiPlanErr"
@@ -15,8 +15,8 @@ import {
   Upload,
   Menu,
   X,
-  ChevronUp,
-  ChevronDown,
+  // ChevronUp,
+  // ChevronDown,
   ArrowLeft,
 } from "lucide-react"
 import { signOut, useSession } from "next-auth/react"
@@ -26,7 +26,7 @@ import { toast } from "sonner"
 
 export default function Page() {
   const [prompt, setPrompt] = useState("")
-  const [quality, setQuality] = useState([0.7])
+  // const [quality, setQuality] = useState([0.7])
   const [currentImg, setCurrentImg] = useState<File | null>(null)
   const [currentGenImg, setCurrentGenImg] = useState<string | null>(null)
   const [showBefore, setShowBefore] = useState(false)
@@ -35,7 +35,7 @@ export default function Page() {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [isLeftSidebarOpen, setIsLeftSidebarOpen] = useState(false)
   const [isRightSidebarOpen, setIsRightSidebarOpen] = useState(false)
-  const [isAdvancedOpen, setIsAdvancedOpen] = useState(false)
+  // const [isAdvancedOpen, setIsAdvancedOpen] = useState(false)
   const {data: session, update} = useSession()
   const [pricingModalOpen, setPricingModalOpen] = useState<boolean>(false)
 
@@ -432,7 +432,7 @@ export default function Page() {
             </div>
 
             {/* Collapsible Advanced Settings for Mobile */}
-            <div className="border-t border-slate-700/50 pt-4">
+            {/* <div className="border-t border-slate-700/50 pt-4">
               <Button
                 variant="ghost"
                 onClick={() => setIsAdvancedOpen(!isAdvancedOpen)}
@@ -503,7 +503,7 @@ export default function Page() {
                   </div>
                 </div>
               )}
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

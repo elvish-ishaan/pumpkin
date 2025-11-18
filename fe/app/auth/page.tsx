@@ -20,9 +20,9 @@ export default function LoginPage() {
         className="w-full max-w-2xl"
       >
         <Card className="bg-[#11141B]/80 backdrop-blur-xl border border-blue-500/20 shadow-2xl rounded-2xl overflow-hidden">
-          <CardHeader className="text-center p-8 border-b border-white/10">
-            <CardTitle className="text-4xl font-bold bg-blue-600 bg-clip-text text-transparent">
-              Welcome to Pumpkin
+          <CardHeader className="text-center border-b border-white/10">
+            <CardTitle className=" flex items-center justify-center">
+              <Image src='/icons/icon-512x512.png' alt="logo" height={100} width={100} />
             </CardTitle>
             <p className="text-gray-400 text-lg mt-3">
               Forget complex tools — just prompt and edit with{" "}

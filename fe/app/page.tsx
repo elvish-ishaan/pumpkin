@@ -42,9 +42,9 @@ export default function LandingPage() {
       {/* Hero Section */}
       <section className="flex flex-col items-center text-center px-6 md:px-12 mt-20">
         <h2 className="text-3xl md:text-5xl font-bold max-w-3xl leading-snug">
-          Edit With a <SparklesText className=" inline w-fit">
-            <AuroraText className=" text-5xl">Prompt</AuroraText>
-            </SparklesText> — No More Complex Platforms, No More Overhead
+          Edit With a <SparklesText className=" inline-block w-fit">
+            <AuroraText className=" text-5xl md:text-7xl lg:text-7xl">Prompt</AuroraText>
+            </SparklesText> <span className=" hidden md:inline-block lg:inline-block">—</span> No More Complex Platforms, No More Overhead
         </h2>
         <p className="text-gray-400 max-w-2xl mt-6">
           Transform your photos effortlessly with AI. Just type your prompt and let Pumpkin
@@ -59,7 +59,7 @@ export default function LandingPage() {
       </section>
 
       {/* Features */}
-      <section id="features" className="grid grid-cols-1 overflow-x-hidden md:grid-cols-3 gap-6 max-w-6xl mx-auto px-6 md:px-12 mt-20">
+      <section id="features" className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto px-6 md:px-12 mt-20">
         {
           features.map( f => <HoverCard key={f.id} title={f.title} description={f.description}/>)
         }
