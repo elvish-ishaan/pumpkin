@@ -2,6 +2,8 @@
 
 import { Progress } from "@/components/ui/progress"
 import { Button } from "@/components/ui/button"
+import { useState } from "react"
+import PricingModal from "./PricingModal"
 
 type PlanType = "free" | "standard" | "premium"
 
@@ -66,8 +68,11 @@ export default function UsageTracker({
     (typeof imagesLimit === "number" && imagesLimit < 9999999 && imagesUsed >= imagesLimit - 1) ||
     (typeof editsLimit === "number" && editsLimit < 9999999 && editsUsed >= editsLimit - 1)
 
+    const [pricingModalOpen, setPricingModalOpen] = useState<boolean>(false)
+
   return (
     <div className="w-full p-4 mb-2 bg-slate-800/70 border border-slate-700 rounded-xl space-y-4 text-sm text-slate-200">
+      <PricingModal open={pricingModalOpen} onOpenChange={setPricingModalOpen}/>
       {/* Plan Header */}
       <div className="flex justify-between items-center">
         <span className="font-semibold capitalize"> {normalizedPlan}</span>
@@ -105,6 +110,7 @@ export default function UsageTracker({
             You’re reaching the free plan limits. Upgrade to unlock more uploads and edits.
           </p>
           <Button
+            onClick={ () => setPricingModalOpen(true)}
             size="sm"
             className="w-full rounded-md bg-blue-600 hover:bg-blue-700"
           >
