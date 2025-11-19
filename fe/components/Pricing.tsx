@@ -1,50 +1,15 @@
 "use client";
 
+import { plans } from "@/lib/constants/pricing";
 import { useRouter } from "next/navigation";
 import React from "react";
 
-const plans = [
-  {
-    name: "Free",
-    price: "₹0",
-    description: "Perfect for trying out Pumpkin AI.",
-    features: [
-      "3 image uploads per month",
-      "5 edit prompts per month",
-      "Basic filters & presets",
-      "Community support",
-    ],
-  },
-  {
-    name: "Standard",
-    price: "₹447/mo",
-    description: "Great for regular creators and professionals.",
-    features: [
-      "Unlimited image uploads",
-      "100 edit prompts per month",
-      "Access to advanced filters & presets",
-      "Priority support",
-      "Advanced settings control",
-    ],
-  },
-  {
-    name: "Premium",
-    price: "₹1,323/mo",
-    description: "For power users who want it all.",
-    features: [
-      "Unlimited image uploads",
-      "Unlimited edit prompts",
-      "All advanced filters & presets",
-      "Full access to advanced settings",
-      "Dedicated priority support",
-    ],
-  },
-];
+
 
 export default function Pricing() {
   const router = useRouter()
   return (
-    <section className="w-full py-16 text-gray-800">
+    <section className="w-full py-8 text-gray-800">
       <div className="max-w-6xl mx-auto px-6 text-center">
         <h2 className="text-4xl font-bold mb-4 text-sky-700">Plans & Pricing</h2>
         <p className="text-lg text-gray-600 mb-12">
@@ -52,10 +17,12 @@ export default function Pricing() {
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {plans.map((plan, index) => (
+          {plans?.map((plan, index) => (
             <div
               key={index}
-              className=" bg-gradient-to-br from-white/10 via-white/5 to-transparent rounded-2xl shadow-lg p-8 border border-sky-200 hover:shadow-xl transition duration-300"
+              className={` bg-gradient-to-br from-white/10 via-white/5 to-transparent rounded-2xl shadow-lg p-8 border border-sky-200 hover:shadow-xl transition duration-300
+                ${plan.name.toLocaleLowerCase() == "standard" && "border border-blue-600 shadow-lg shadow-blue-600"}
+                `}
             >
               <h3 className="text-2xl font-semibold text-white mb-2">{plan.name}</h3>
               <p className="text-4xl font-bold text-sky-700 mb-4">{plan.price}</p>

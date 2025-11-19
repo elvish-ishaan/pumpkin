@@ -2,8 +2,7 @@
 
 import { File, Sliders, Sparkles } from "lucide-react"
 
-export default function Features() {
-  const features = [
+const features = [
     {
       icon: <File className="w-8 h-8 text-primary" />,
       title: "Smart Enhancements",
@@ -20,6 +19,8 @@ export default function Features() {
       description: "Simple, fast, and designed to keep you focused.",
     },
   ]
+
+export default function Features() {
 
   return (
     <section className="w-full px-6 py-20 md:py-28 bg-background">
