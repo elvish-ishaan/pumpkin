@@ -36,10 +36,10 @@ jobs:
       - name: Clone pumpkin_infra repo
         run: |
           git clone https://${{ secrets.PAT }}@github.com/elvish-ishaan/pumpkin_infra.git
-          cd pumpkin_infra
+          cd pumpkin_infra/helm/prod
 
           # Update image tag in values.yaml
-          sed -i "s|tag: .*|tag: \"${{ github.sha }}\"|g" /helm/prod/values.yaml
+          sed -i "s|tag: .*|tag: \"${{ github.sha }}\"|g" /values.yaml
 
           # Commit and push changes
           git config user.name "GitHub Actions Bot"
