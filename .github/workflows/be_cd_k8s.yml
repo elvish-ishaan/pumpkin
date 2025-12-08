@@ -38,9 +38,12 @@ jobs:
           git clone https://${{ secrets.PAT }}@github.com/elvish-ishaan/pumpkin_infra.git
           cd pumpkin_infra/helm/prod
 
+          echo "inside prod directory"
           # Update image tag in values.yaml
-          sed -i "s|tag: .*|tag: \"${{ github.sha }}\"|g" /values.yaml
+          sed -i "s|tag: .*|tag: \"${{ github.sha }}\"|g" values.yaml
 
+          echo "updated the image tag"
+          
           # Commit and push changes
           git config user.name "GitHub Actions Bot"
           git config user.email "actions@github.com"
