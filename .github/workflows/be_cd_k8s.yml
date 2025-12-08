@@ -1,4 +1,4 @@
-name: Build and Deploy to Docker Hub
+name: Build and Deploy to Docker Hub and update tag in infra repo
 
 on:
   push:
@@ -43,7 +43,7 @@ jobs:
           sed -i "s|tag: .*|tag: \"${{ github.sha }}\"|g" values.yaml
 
           echo "updated the image tag"
-          
+
           # Commit and push changes
           git config user.name "GitHub Actions Bot"
           git config user.email "actions@github.com"
