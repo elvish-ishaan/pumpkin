@@ -29,7 +29,7 @@ jobs:
         context: ./be
         file: ./be/Dockerfile
         push: true
-        tags: ${{ secrets.DOCKER_USERNAME }}/pumpkin-be:latest  
+        tags: ${{ secrets.DOCKER_USERNAME }}/pumpkin-be:${{github.sha}}
 
     - name: Verify Pushed Image
       run: docker pull ${{ secrets.DOCKER_USERNAME }}/pumpkin-be:latest
