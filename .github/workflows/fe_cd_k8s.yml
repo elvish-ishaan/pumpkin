@@ -1,14 +1,14 @@
-name: Build and Deploy pumpkin-be to Docker Hub and update tag in infra repo
+name: Build and Deploy pumpkin-fe to Docker Hub and update tag in infra repo
 
 on:
   push:
     branches: [ "main" ]
     paths:
-      - "be/**"
+      - "fe/**"
   pull_request:
     branches: [ "main" ]
     paths:
-      - "be/**"
+      - "fe/**"
 
 jobs:
   build:
@@ -28,15 +28,15 @@ jobs:
       - name: Build and Push Docker image
         uses: docker/build-push-action@v2
         with:
-          context: ./be
-          file: ./be/Dockerfile
+          context: ./fe
+          file: ./fe/Dockerfile.prod
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/pumpkin-be:${{ github.sha }}
+          tags: ${{ secrets.DOCKER_USERNAME }}/pumpkin-fe:${{ github.sha }}
 
       - name: Clone pumpkin_infra repo
         run: |
           git clone https://${{ secrets.PAT }}@github.com/elvish-ishaan/pumpkin_infra.git
-          cd pumpkin_infra/helm/prod
+          cd pumpkin_infra/helm/fe
 
           echo "inside prod directory"
           # Update image tag in values.yaml
@@ -48,5 +48,5 @@ jobs:
           git config user.name "GitHub Actions Bot"
           git config user.email "actions@github.com"
           git add .
-          git commit -m "Update pumpkin-be image to ${{ github.sha }}"
+          git commit -m "Update pumpkin-fe image to ${{ github.sha }}"
           git push
