@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [new URL('https://storage.googleapis.com/pumpkin-bucket-v2/**'),
        new URL('https://res.cloudinary.com/diqurtmad/image/upload/**')],
   },
+  output: "standalone"
 };
 
 export default nextConfig;
