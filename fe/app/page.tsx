@@ -38,7 +38,6 @@ export default function LandingPage() {
       <header className="flex justify-between items-center px-6 md:px-12 py-4">
         <Navbar/>
       </header>
-
       {/* Hero Section */}
       <section className="flex flex-col items-center text-center px-6 md:px-12 mt-20">
         <h2 className="text-3xl md:text-5xl font-bold max-w-3xl leading-snug">
