@@ -1,5 +1,6 @@
 "use client"
 
+import Banner from "@/components/Banner"
 import HoverCard from "@/components/cards/hoverCard"
 import { CompareDemo } from "@/components/CompareDemo"
 import Footer from "@/components/Footer"
@@ -38,9 +39,9 @@ export default function LandingPage() {
       <header className="flex justify-between items-center px-6 md:px-12 py-4">
         <Navbar/>
       </header>
-
       {/* Hero Section */}
       <section className="flex flex-col items-center text-center px-6 md:px-12 mt-20">
+        <Banner/>
         <h2 className="text-3xl md:text-5xl font-bold max-w-3xl leading-snug">
           Edit With a <SparklesText className=" inline-block w-fit">
             <AuroraText className=" text-5xl md:text-7xl lg:text-7xl">Prompt</AuroraText>
