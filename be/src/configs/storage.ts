@@ -20,36 +20,20 @@ export async function uploadFile(
   destFileName: string,
   mimeType: string
 ): Promise<string> {
-  try {
-    const bucket = storage.bucket(bucketName);
+  const bucket = storage.bucket(bucketName);
   const file = bucket.file(destFileName);
 
-  const stream = file.createWriteStream({
-    metadata: {
-      // contentDisposition: 'inline',
-      contentType: mimeType, // Set appropriate content type
-    },
-    resumable: false, // Set to true for resumable uploads
+  await new Promise<void>((resolve, reject) => {
+    const stream = file.createWriteStream({
+      metadata: { contentType: mimeType },
+      resumable: false,
+    });
+    stream.once('error', reject);
+    stream.once('finish', resolve);
+    stream.end(buffer);
   });
 
-  stream.on('error', (err) => {
-    console.error('Error during upload stream:', err);
-  });
-
-  stream.on('finish', () => {
-    console.log(`Buffer streamed to ${bucketName}/${destFileName}`);
-  });
-
-  stream.end(buffer);
-
-
-  const publicUrl = `https://storage.googleapis.com/${bucketName}/${destFileName}`;
-
-  return publicUrl;
-  } catch (error) {
-    console.error(`Error uploading buffer to GCS: ${error}`);
-    throw error;
-  }
+  return `https://storage.googleapis.com/${bucketName}/${destFileName}`;
 }
 
 
