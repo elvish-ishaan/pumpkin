@@ -23,14 +23,10 @@ export async function uploadFile(
   const bucket = storage.bucket(bucketName);
   const file = bucket.file(destFileName);
 
-  await new Promise<void>((resolve, reject) => {
-    const stream = file.createWriteStream({
-      metadata: { contentType: mimeType },
-      resumable: false,
-    });
-    stream.once('error', reject);
-    stream.once('finish', resolve);
-    stream.end(buffer);
+  await file.save(buffer, {
+    metadata: { contentType: mimeType },
+    resumable: false,
+    validation: false,
   });
 
   return `https://storage.googleapis.com/${bucketName}/${destFileName}`;
